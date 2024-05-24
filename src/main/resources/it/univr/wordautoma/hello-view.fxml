@@ -16,6 +16,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
+                  <MenuItem fx:id="btnNew" mnemonicParsing="false" onAction="#onNewClick" text="Nuovo Automa" />
+                  <MenuItem mnemonicParsing="false" text="Salva" />
                   <MenuItem mnemonicParsing="false" onAction="#onButtonClick" text="Open file" />
               <MenuItem mnemonicParsing="false" text="Close" />
             </items>
@@ -46,7 +48,7 @@
                      </VBox.margin></Button>
                </children>
             </VBox>
-            <ImageView pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="graph" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
