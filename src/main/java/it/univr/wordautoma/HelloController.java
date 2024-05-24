@@ -52,6 +52,36 @@ public class HelloController {
     {
         test.Simulate(simulateText.getText());
     }
-    //ciao
-    //ciao2
+
+    @FXML
+    protected void onNewClick() { // risolvere: quando si preme "Annulla" nella finestra di dialogo
+        test = new Automa();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Automa");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        Stage tempStage = new Stage();
+        File selectedFile = fileChooser.showSaveDialog(tempStage);
+        if(!selectedFile.getName().contains(".txt"))
+            selectedFile = new File(selectedFile.getAbsolutePath() + ".txt");
+        String dirPath = selectedFile.getAbsolutePath().toString().substring(0, selectedFile.getAbsolutePath().toString().length() - (selectedFile.getName().toString().length()));
+        File dir = new File(dirPath);
+        String fileName = selectedFile.getName().toString();
+        System.out.println(dirPath + ' ' + fileName);
+        File newFile = new File(dir, fileName);
+        try {
+            // File.createNewFile() Method Used
+            boolean isFileCreated = newFile.createNewFile();
+            if (isFileCreated) {
+                System.out.println("File created successfully.");
+            }
+            else {
+                System.out.println("File already exists or an error occurred.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
