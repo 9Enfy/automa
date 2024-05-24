@@ -64,7 +64,11 @@ public class Automa {
                     tempIndex=0;
                     for(c=0;c<allArch.get(i).getWeigth().length() && isValid;c++)
                     {
-                        if(!(simulateText.charAt(index+tempIndex)==allArch.get(i).getWeigth().charAt(c)))
+                        if(index+tempIndex>=simulateText.length())
+                        {
+                            isValid=false;
+                        }
+                        else if(!(simulateText.charAt(index+tempIndex)==allArch.get(i).getWeigth().charAt(c)))
                         {
                             isValid=false;
                         }
