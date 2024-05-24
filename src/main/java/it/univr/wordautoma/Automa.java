@@ -40,72 +40,56 @@ public class Automa {
         }
         System.out.println("FINE");
     }
-    public void Simulate(String simulateText)
-    {
+    public void Simulate(String simulateText) {
         Node selectedNode = allNode.get(0);
-        int length=0;
-        int index=0;
-        int tempIndex=0;
-        int finalIndex=-1;
+        int length = 0;
+        int index = 0;
+        int tempIndex = 0;
+        int finalIndex = -1;
         Boolean isValid;
         Node tempNode = null;
         int i;
         int c;
-        int arcoTrovato=-1;
-        while(true)
-        {
-            length=0;
-            arcoTrovato=-1;
-            for(i=0;i<allArch.size();i++)
-            {
-                if(allArch.get(i).getSenderNode()==selectedNode)
-                {
-                    isValid=true;
-                    tempIndex=0;
-                    for(c=0;c<allArch.get(i).getWeigth().length() && isValid;c++)
-                    {
-                        if(index+tempIndex>=simulateText.length())
-                        {
-                            isValid=false;
-                        }
-                        else if(!(simulateText.charAt(index+tempIndex)==allArch.get(i).getWeigth().charAt(c)))
-                        {
-                            isValid=false;
+        int arcoTrovato = -1;
+        while (true) {
+            length = 0;
+            arcoTrovato = -1;
+            for (i = 0; i < allArch.size(); i++) {
+                if (allArch.get(i).getSenderNode() == selectedNode) {
+                    isValid = true;
+                    tempIndex = 0;
+                    for (c = 0; c < allArch.get(i).getWeigth().length() && isValid; c++) {
+                        if (index + tempIndex >= simulateText.length()) {
+                            isValid = false;
+                        } else if (!(simulateText.charAt(index + tempIndex) == allArch.get(i).getWeigth().charAt(c))) {
+                            isValid = false;
                         }
                         tempIndex++;
                     }
-                    if(isValid && allArch.get(i).getWeigth().length()>length)
-                    {
+                    if (isValid && allArch.get(i).getWeigth().length() > length) {
                         tempNode = allNode.get(Integer.parseInt(allArch.get(i).getReceiverNode().getId()));
                         length = allArch.get(i).getWeigth().length();
-                        arcoTrovato=i;
+                        arcoTrovato = i;
                     }
                 }
             }
-            if(tempNode==null)
-            {
+            if (tempNode == null) {
                 System.out.println("Non è possibile proseguire");
                 return;
-            }
-            else
-            {
+            } else {
                 System.out.println("Nodo successivo trovato!");
-                index=index+allArch.get(arcoTrovato).getWeigth().length();
+                index = index + allArch.get(arcoTrovato).getWeigth().length();
                 selectedNode = tempNode;
-                tempNode=null;
-                if(index==simulateText.length())
-                {
-                    if(selectedNode.isEnd)
-                    {
+                tempNode = null;
+                if (index == simulateText.length()) {
+                    if (selectedNode.isEnd) {
                         System.out.println("Arrivati alla fine");
-                    }
-                    else
-                    {
+                    } else {
                         System.out.println("Arrivati alla fine, ma non si è in un nodo fine");
                     }
                     return;
                 }
             }
         }
-    }
+    } // test
 }
