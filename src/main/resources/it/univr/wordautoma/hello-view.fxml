@@ -10,14 +10,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.HelloController">
+<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.HelloController">
    <children>
       <MenuBar>
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
                   <MenuItem fx:id="btnNew" mnemonicParsing="false" onAction="#onNewClick" text="Nuovo Automa" />
-                  <MenuItem mnemonicParsing="false" text="Salva" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnSaveClick" text="Salva" />
                   <MenuItem mnemonicParsing="false" onAction="#onButtonClick" text="Open file" />
               <MenuItem mnemonicParsing="false" text="Close" />
             </items>
