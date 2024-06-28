@@ -14,6 +14,8 @@ public class Automa {
         allArch = new ArrayList<Arch>();
     }
     public void ReadAutomaFromFile(File fileDaLeggere) throws IOException {
+        allNode = new ArrayList<Node>();
+        allArch = new ArrayList<Arch>();
         FileInputStream fs= new FileInputStream(fileDaLeggere);
         BufferedReader br = new BufferedReader(new InputStreamReader(fs));
         for(int i = 0; i < 9; i++) //la prima riga nodo è la decima
@@ -91,5 +93,29 @@ public class Automa {
                 }
             }
         }
+    }
+    public String toString()
+    {
+        StringBuilder stringaNodi= new StringBuilder();
+        Node tempNode;
+        for(int i=0;i<allNode.size();i++)
+        {
+            tempNode= allNode.get(i);
+            stringaNodi.append(tempNode.id).append(" [label = ").append(tempNode.nome).append(" ,shape = ");
+            if(tempNode.isEnd)
+                stringaNodi.append("doublecircle ]\n");
+            else
+                stringaNodi.append("circle ]\n");
+        }
+        //scrivi archi
+        StringBuilder stringaArchi= new StringBuilder("start -> 0\n");
+        Arch tempArch;
+        for(int i=0;i<allArch.size();i++)
+        {
+            tempArch = allArch.get(i);
+            stringaArchi.append(tempArch.getSenderNode().id).append(" -> ").append(tempArch.getReceiverNode().id).append(" [label = ").append(tempArch.getWeigth()).append(" ]\n");
+        }
+        String stringaFinale = stringaNodi+"\n"+stringaArchi+"\n}";
+        return stringaFinale;
     }
 }
