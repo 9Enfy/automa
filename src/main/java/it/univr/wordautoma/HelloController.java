@@ -1,24 +1,58 @@
 package it.univr.wordautoma;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalTime;
 
 
 public class HelloController {
     Automa test;
 
-    public HelloController()
+    // IMAGE UPDATER
+    @FXML
+    private ImageView graph;
+
+    private Model model;
+    private Timeline image_updater;
+
+    @FXML
+    private void initialize() {
+        test = new Automa();
+        model = Model.getInstance();
+        updateImage();
+        initialize_image_updater();
+        image_updater.play();
+    }
+
+    private void initialize_image_updater() {
+        image_updater = new Timeline(new KeyFrame(Duration.seconds(2), e -> updateImage()));
+        image_updater.setCycleCount(Timeline.INDEFINITE);
+    }
+
+    public void updateImage() {
+        LocalTime time = LocalTime.now();
+        System.out.println("Current Time: " + time);
+        model.getImage();
+        graph.setImage(model.getImage());
+    }
+/*
+    @FXML
+    private void HelloController()
     {
         test = new Automa();
-    }
+    }*/
 
     @FXML
     private Label welcomeText;
