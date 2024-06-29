@@ -26,9 +26,11 @@ public class HelloController {
 
     private Model model;
     private Timeline image_updater;
+    private FileManager filemanager;
 
     @FXML
     private void initialize() {
+        filemanager = FileManager.getInstance();
         test = new Automa();
         model = Model.getInstance();
         updateImage();
@@ -44,6 +46,7 @@ public class HelloController {
     public void updateImage() {
         LocalTime time = LocalTime.now();
         System.out.println("Current Time: " + time);
+        test.toImage();
         model.getImage();
         graph.setImage(model.getImage());
     }
@@ -68,16 +71,8 @@ public class HelloController {
     @FXML
     protected void onButtonClick()
     {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Dot Files", "*.dot"),
-                new FileChooser.ExtensionFilter("All Files", "*.*"));
-        Stage tempStage = new Stage();
-        File selectedFile = fileChooser.showOpenDialog(tempStage);
-        /*if (selectedFile != null) {
-            tempStage.display(selectedFile);
-        }*/
+        System.out.println("newugnjngkjan");
+        File selectedFile = filemanager.SelectFile();
         try {
             test.ReadAutomaFromFile(selectedFile);
         } catch (IOException e) {
@@ -93,33 +88,7 @@ public class HelloController {
 
     @FXML
     protected void onNewClick() { // risolvere: quando si preme "Annulla" nella finestra di dialogo
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Automa");
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-        Stage tempStage = new Stage();
-        File selectedFile = fileChooser.showSaveDialog(tempStage);
-        if(!selectedFile.getName().contains(".txt"))
-            selectedFile = new File(selectedFile.getAbsolutePath() + ".txt");
-        String dirPath = selectedFile.getAbsolutePath().toString().substring(0, selectedFile.getAbsolutePath().toString().length() - (selectedFile.getName().toString().length()));
-        File dir = new File(dirPath);
-        String fileName = selectedFile.getName().toString();
-        System.out.println(dirPath + ' ' + fileName);
-        File newFile = new File(dir, fileName);
-        try {
-            // File.createNewFile() Method Used
-            boolean isFileCreated = newFile.createNewFile();
-            if (isFileCreated) {
-                System.out.println("File created successfully.");
-            }
-            else {
-                System.out.println("File already exists or an error occurred.");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+       filemanager.CreateNewFile();
     }
 
     @FXML
@@ -132,47 +101,6 @@ public class HelloController {
 
     private void SaveToFile()
     {
-        String boiler = "digraph finite_state_machine {\n" +
-                "fontname=\"Helvetica,Arial,sans-serif\"\n" +
-                "node [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
-                "edge [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
-                "start [label= \"\", shape=none,height=.0,width=.0]\n" +
-                "rankdir=LR;\n" +
-                "nodesep= 0.5;\n" +
-                "ranksep = 0.5;\n";
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Automa");
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Dot Files", "*.dot"));
-        Stage tempStage = new Stage();
-        File selectedFile = fileChooser.showSaveDialog(tempStage);
-        if(!selectedFile.getName().contains(".txt"))
-            selectedFile = new File(selectedFile.getAbsolutePath() + ".dot");
-        String dirPath = selectedFile.getAbsolutePath().toString().substring(0, selectedFile.getAbsolutePath().toString().length() - (selectedFile.getName().toString().length()));
-        File dir = new File(dirPath);
-        String fileName = selectedFile.getName().toString();
-        System.out.println(dirPath + ' ' + fileName);
-        File newFile = new File(dir, fileName);
-        try {
-            FileWriter fW = new FileWriter(newFile);
-            fW.write(boiler+"\n"+test);
-            fW.close();
-        } catch (IOException e) {
-            System.out.println("Scrittura nel file fallita");
-            throw new RuntimeException(e);
-        }/*
-        try {
-            // File.createNewFile() Method Used
-            boolean isFileCreated = newFile.createNewFile();
-            if (isFileCreated) {
-                System.out.println("File created successfully.");
-            }
-            else {
-                System.out.println("File already exists or an error occurred.");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        filemanager.SaveToFile(test.toString());
     }
 }

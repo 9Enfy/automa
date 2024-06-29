@@ -3,15 +3,19 @@ package it.univr.wordautoma;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Automa {
     ArrayList<Node> allNode;
     ArrayList<Arch> allArch;
+
+    FileManager filemanager;
     public Automa()
     {
         allNode = new ArrayList<Node>();
         allArch = new ArrayList<Arch>();
+        filemanager = FileManager.getInstance();
     }
     public void ReadAutomaFromFile(File fileDaLeggere) throws IOException {
         allNode = new ArrayList<Node>();
@@ -117,5 +121,27 @@ public class Automa {
         }
         String stringaFinale = stringaNodi+"\n"+stringaArchi+"\n}";
         return stringaFinale;
+    }
+
+    public void toImage()
+    {
+        System.out.println("Test");
+        File fileDaConvertire = filemanager.SaveToFileAutomatic(this.toString());
+        fileDaConvertire.setReadable(true);
+        File doveSalvare = new File(filemanager.getTemporaryWorkDirectory()+"/test.png");
+        doveSalvare.setWritable(true,false);
+        try {
+            //String command = "dot -Tpng "+fileDaConvertire.getAbsolutePath()+" -o "+doveSalvare.getAbsolutePath();
+            List<String> testListe = new ArrayList<String>();
+            testListe.add("dot");
+            testListe.add("-Tpng");
+            testListe.add("-Gratio=fill");
+            testListe.add(fileDaConvertire.getAbsolutePath());
+            testListe.add("-o");
+            testListe.add(doveSalvare.getAbsolutePath());
+            Process process = new ProcessBuilder(testListe).inheritIO().start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.HelloController">
@@ -36,19 +37,24 @@
       </MenuBar>
       <HBox spacing="40.0">
          <children>
-            <VBox minWidth="-Infinity">
+            <Pane maxWidth="400.0" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onButtonClick" text="Aggiungi nodo" />
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Modifica nodo" />
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSimulateClick" text="Simula" />
-                  <TextField id="simulateText" fx:id="simulateText" maxWidth="1.7976931348623157E308" promptText="Sequenza di caratteri da testare" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Play" textAlignment="CENTER">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin></Button>
+                  <VBox minWidth="-Infinity">
+                     <children>
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onButtonClick" text="Aggiungi nodo" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Modifica nodo" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSimulateClick" text="Simula" />
+                        <TextField id="simulateText" fx:id="simulateText" maxWidth="1.7976931348623157E308" promptText="Sequenza di caratteri da testare" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Play" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <ImageView fx:id="graph" pickOnBounds="true" preserveRatio="true">
+            </Pane>
+            <ImageView fx:id="graph" fitHeight="1080.0" fitWidth="1600.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
