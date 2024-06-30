@@ -58,7 +58,9 @@ public class Automa {
         }
         System.out.println("FINE");
     }
-    public void Simulate(String simulateText) {
+    public Message Simulate(String simulateText) {
+        Message resultText = new Message();
+        List<String> sequence = new ArrayList<String>();
         Node selectedNode = allNode.get(0);
         int length = 0;
         int index = 0;
@@ -94,19 +96,25 @@ public class Automa {
             }
             if (tempNode == null) {
                 System.out.println("Non è possibile proseguire");
-                return;
+                resultText.setMessage("Non è possibile proseguire");
+                resultText.setSequence(sequence);
+                return resultText;
             } else {
                 System.out.println("Nodo successivo trovato!");
                 index = index + allArch.get(arcoTrovato).getWeigth().length();
                 selectedNode = tempNode;
+                sequence.add(selectedNode.getNome());
                 tempNode = null;
                 if (index == simulateText.length()) {
                     if (selectedNode.isEnd) {
                         System.out.println("Arrivati alla fine");
+                        resultText.setMessage("Arrivati alla fine");
                     } else {
                         System.out.println("Arrivati alla fine, ma non si è in un nodo fine");
+                        resultText.setMessage("Arrivati alla fine, ma non si è in un nodo fine");
                     }
-                    return;
+                    resultText.setSequence(sequence);
+                    return resultText;
                 }
             }
         }

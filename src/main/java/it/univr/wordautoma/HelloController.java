@@ -8,6 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -26,6 +29,9 @@ public class HelloController {
     @FXML
     private ImageView graph;
 
+    @FXML
+    private Text message;
+
     private Model model;
     private Timeline image_updater;
     private FileManager filemanager;
@@ -34,6 +40,7 @@ public class HelloController {
     @FXML
     private void initialize() {
         filemanager = FileManager.getInstance();
+        //resize();
         test = Automa.getInstance();
         model = Model.getInstance();
         updateImage();
@@ -53,12 +60,27 @@ public class HelloController {
         model.getImage();
         graph.setImage(model.getImage());
     }
-/*
+
     @FXML
-    private void HelloController()
-    {
-        test = new Automa();
-    }*/
+    private Pane pane;
+
+    @FXML
+    private HBox windowBox;
+
+    // non funzionano getWidth/Height
+    private void reSize() {
+        double w = (windowBox.getWidth() - windowBox.getPadding().getLeft() - windowBox.getPadding().getRight() - pane.getWidth());
+        double h = (windowBox.getHeight() - windowBox.getPadding().getBottom() - windowBox.getPadding().getTop() - pane.getHeight());
+        System.out.println(w + " - " + h);
+        System.out.println(windowBox.getWidth() + " - " + windowBox.getPadding().getLeft() + " - " + windowBox.getPadding().getRight() + " - " + pane.getWidth());
+        System.out.println(windowBox.getHeight() + " - " + windowBox.getPadding().getBottom() + " - " + windowBox.getPadding().getTop() + " - " + pane.getHeight());
+        graph.setFitWidth(w);
+        graph.setFitHeight(h);
+    }
+
+    private void printResult(Message resultText){
+        message.setText(resultText.getResult());
+    }
 
     @FXML
     private Label welcomeText;
@@ -86,7 +108,7 @@ public class HelloController {
     @FXML
     protected void onSimulateClick()
     {
-        test.Simulate(simulateText.getText());
+        printResult(test.Simulate(simulateText.getText()));
     }
 
     @FXML
