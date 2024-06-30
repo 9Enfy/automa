@@ -6,7 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
@@ -31,6 +34,7 @@ public class HelloController {
     @FXML
     private void initialize() {
         filemanager = FileManager.getInstance();
+        reSize();
         test = new Automa();
         model = Model.getInstance();
         updateImage();
@@ -50,12 +54,22 @@ public class HelloController {
         model.getImage();
         graph.setImage(model.getImage());
     }
-/*
+
     @FXML
-    private void HelloController()
-    {
-        test = new Automa();
-    }*/
+    private Pane pane;
+
+    @FXML
+    private HBox windowBox;
+
+    private void reSize() {
+        double w = (windowBox.getWidth() - windowBox.getPadding().getLeft() - windowBox.getPadding().getRight() - pane.getWidth());
+        double h = (windowBox.getHeight() - windowBox.getPadding().getBottom() - windowBox.getPadding().getTop() - pane.getHeight());
+        System.out.println(w + " - " + h);
+        System.out.println(windowBox.getWidth() + " - " + windowBox.getPadding().getLeft() + " - " + windowBox.getPadding().getRight() + " - " + pane.getWidth());
+        System.out.println(windowBox.getHeight() + " - " + windowBox.getPadding().getBottom() + " - " + windowBox.getPadding().getTop() + " - " + pane.getHeight());
+        graph.setFitWidth(w);
+        graph.setFitHeight(h);
+    }
 
     @FXML
     private Label welcomeText;
