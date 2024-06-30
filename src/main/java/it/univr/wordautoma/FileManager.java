@@ -34,6 +34,7 @@ public class FileManager {
                 tmp.setWritable(true,false);
                 tmp.setReadable(true,false);
                 tmp.setExecutable(true,false);
+                tmp.deleteOnExit();
                 temporaryWorkDirectory = tmp.toPath().toString();
             } catch (IOException e) {
                 throw new RuntimeException(e);

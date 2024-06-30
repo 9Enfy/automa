@@ -1,21 +1,33 @@
 package it.univr.wordautoma;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Automa {
-    ArrayList<Node> allNode;
-    ArrayList<Arch> allArch;
-
-    FileManager filemanager;
-    public Automa()
+    static ArrayList<Node> allNode;
+    static ArrayList<Arch> allArch;
+    private static final Automa instance = new Automa();
+    static Boolean isFirstTime = true;
+    static FileManager filemanager;
+    private Automa()
     {
-        allNode = new ArrayList<Node>();
-        allArch = new ArrayList<Arch>();
-        filemanager = FileManager.getInstance();
+
+    }
+    public static Automa getInstance()
+    {
+        if(isFirstTime)
+        {
+            allNode = new ArrayList<Node>();
+            Node primo = new Node("q0");
+            primo.isEnd = false;
+            primo.setId("0");
+            allNode.add(primo);
+            allArch = new ArrayList<Arch>();
+            filemanager = FileManager.getInstance();
+            isFirstTime = false;
+        }
+        return instance;
+
     }
     public void ReadAutomaFromFile(File fileDaLeggere) throws IOException {
         allNode = new ArrayList<Node>();
@@ -73,7 +85,8 @@ public class Automa {
                         tempIndex++;
                     }
                     if (isValid && allArch.get(i).getWeigth().length() > length) {
-                        tempNode = allNode.get(Integer.parseInt(allArch.get(i).getReceiverNode().getId()));
+                        Boolean trovato = false;
+                        tempNode = allArch.get(i).receiverNode;
                         length = allArch.get(i).getWeigth().length();
                         arcoTrovato = i;
                     }
@@ -102,6 +115,7 @@ public class Automa {
     {
         StringBuilder stringaNodi= new StringBuilder();
         Node tempNode;
+        stringaNodi.append("0 [label = q0 ,shape = circle ]\n");
         for(int i=0;i<allNode.size();i++)
         {
             tempNode= allNode.get(i);
@@ -125,7 +139,7 @@ public class Automa {
 
     public void toImage()
     {
-        System.out.println("Test");
+        //System.out.println("Test");
         File fileDaConvertire = filemanager.SaveToFileAutomatic(this.toString());
         fileDaConvertire.setReadable(true);
         File doveSalvare = new File(filemanager.getTemporaryWorkDirectory()+"/test.png");
@@ -135,7 +149,7 @@ public class Automa {
             List<String> testListe = new ArrayList<String>();
             testListe.add("dot");
             testListe.add("-Tpng");
-            testListe.add("-Gratio=fill");
+            //testListe.add("-Gratio=fill");
             testListe.add(fileDaConvertire.getAbsolutePath());
             testListe.add("-o");
             testListe.add(doveSalvare.getAbsolutePath());
@@ -144,4 +158,136 @@ public class Automa {
             throw new RuntimeException(e);
         }
     }
+
+    public Boolean addNode(String nodoDaAggiungere, Boolean isEnd) {
+        if (!nodoDaAggiungere.matches("[a-zA-Z0-9]+")) {
+            System.out.println("Contiene caratteri diversi da lettere e numeri");
+            return false;
+        }
+        Boolean trovato=false;
+        for(int i=0;i<allNode.size() && !trovato;i++)
+        {
+            if(allNode.get(i).getNome().equals(nodoDaAggiungere))
+                trovato=true;
+        }
+        if(trovato)
+        {
+            System.out.println("C'è già un nodo con quel nome");
+            return false;
+        }
+        else
+        {
+            Node tmp = new Node(nodoDaAggiungere);
+            tmp.setIsEnd(false);
+            Random random = new Random();
+            tmp.setId(String.valueOf(random.nextInt(0,99999)));
+            tmp.setIsEnd(isEnd);
+            allNode.add(tmp);
+            return true;
+        }
+
+
+    }
+
+    public Boolean ModifyNode(String nodoDaModificare, String nuovoNome, Boolean isEnd )
+    {
+        for(int i=0;i<allNode.size();i++)
+        {
+            if(nodoDaModificare.equals(allNode.get(i).getNome()) && nuovoNome.matches("[a-zA-Z0-9]+"))
+            {
+
+                allNode.get(i).setNome(nuovoNome);
+                allNode.get(i).setIsEnd(isEnd);
+                return true;
+            }
+        }
+        return false;
+    }
+    public Boolean DeleteNode(String nodoDaEleminare)
+    {
+        Node nodoDaEleminareNode = null;
+        for(int i=0;i<allNode.size();i++)
+        {
+            if(nodoDaEleminare.equals(allNode.get(i).getNome()))
+            {
+                nodoDaEleminareNode = allNode.remove(i);
+            }
+        }
+        if(nodoDaEleminare.isEmpty())
+            return false;
+        //cancella tutti gli archi che hanno il nodo
+        for(int i=0;i<allArch.size();i++)
+        {
+            if(allArch.get(i).getReceiverNode().equals(nodoDaEleminareNode) || allArch.get(i).getSenderNode().equals(nodoDaEleminareNode))
+            {
+                allArch.remove(i);
+                i--;
+            }
+        }
+        return true;
+    }
+    public Boolean AggiungiArco(String nomePartenza, String nomeArrivo, String peso)
+    {
+        Arch arcoTest = null;
+        for(int i=0;i<allArch.size();i++)
+        {
+            arcoTest = allArch.get(i);
+            if(arcoTest.getSenderNode().getNome().equals(nomePartenza)&&arcoTest.getReceiverNode().getNome().equals(nomeArrivo)) {
+                System.out.println("Esiste già quell'arco");
+                return false;
+            }
+        }
+        //ottieni nodo partenza
+        Node startNode=null;
+        Node endNode=null;
+        for(int i=0;i<allNode.size();i++)
+        {
+            if(allNode.get(i).getNome().equals(nomePartenza))
+            {
+                startNode = allNode.get(i);
+            }
+            if(allNode.get(i).getNome().equals(nomeArrivo))
+            {
+                endNode = allNode.get(i);
+            }
+        }
+        if(startNode==null || endNode==null)
+        {
+            System.out.println("Uno dei nodi non esiste");
+            return false;
+        }
+        else
+        {
+            arcoTest = new Arch(startNode,endNode,peso);
+            allArch.add(arcoTest);
+            return true;
+        }
+    }
+    public Boolean ModificaArco(String nomePartenza, String nomeArrivo, String peso)
+    {
+        Arch arcoTest = null;
+        for(int i=0;i<allArch.size();i++)
+        {
+            arcoTest = allArch.get(i);
+            if(arcoTest.getSenderNode().getNome().equals(nomePartenza)&&arcoTest.getReceiverNode().getNome().equals(nomeArrivo)) {
+                allArch.get(i).setWeigth(peso);
+                return true;
+            }
+        }
+        return false;
+    }
+    public Boolean EliminaArco(String nomePartenza, String nomeArrivo)
+    {
+        Arch arcoTest = null;
+        for(int i=0;i<allArch.size();i++)
+        {
+            arcoTest = allArch.get(i);
+            if(arcoTest.getSenderNode().getNome().equals(nomePartenza)&&arcoTest.getReceiverNode().getNome().equals(nomeArrivo)) {
+                allArch.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

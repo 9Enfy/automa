@@ -3,6 +3,8 @@ package it.univr.wordautoma;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -28,10 +30,11 @@ public class HelloController {
     private Timeline image_updater;
     private FileManager filemanager;
 
+
     @FXML
     private void initialize() {
         filemanager = FileManager.getInstance();
-        test = new Automa();
+        test = Automa.getInstance();
         model = Model.getInstance();
         updateImage();
         initialize_image_updater();
@@ -45,7 +48,7 @@ public class HelloController {
 
     public void updateImage() {
         LocalTime time = LocalTime.now();
-        System.out.println("Current Time: " + time);
+       // System.out.println("Current Time: " + time);
         test.toImage();
         model.getImage();
         graph.setImage(model.getImage());
@@ -98,9 +101,47 @@ public class HelloController {
         SaveToFile();
 
     }
+    @FXML
+    protected void onInserisciNodoClick() throws IOException {
+        CreaFinestra("inserisciNodo.fxml");
 
+    }
+    @FXML
+    protected void onModificaNodoClick() throws IOException {
+        CreaFinestra("modificaNodo.fxml");
+    }
+    @FXML
+    protected void onEliminaNodoClick() throws IOException
+    {
+        CreaFinestra("eliminaNodo.fxml");
+    }
+
+    @FXML
+    protected void onAggiungiArcoClick() throws IOException
+    {
+        CreaFinestra("aggiungiArco.fxml");
+    }
+    @FXML
+    protected void onModificaArcoClick() throws IOException
+    {
+        CreaFinestra("modificaArco.fxml");
+    }
+    @FXML
+    protected void onEliminaArcoClick() throws IOException
+    {
+        CreaFinestra("eliminaArco.fxml");
+    }
     private void SaveToFile()
     {
         filemanager.SaveToFile(test.toString());
     }
+    private void CreaFinestra(String nomeFXML) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(nomeFXML));
+        Stage stage = new Stage();
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.ModifyNodeController">
+   <children>
+      <HBox prefHeight="50.0" prefWidth="417.0">
+         <children>
+            <Label text="Nome del nodo da modificare" />
+            <TextField fx:id="vecchioNomeTextField" />
+            <Button mnemonicParsing="false" onAction="#onConfermaClick" text="Conferma" />
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="417.0">
+         <children>
+            <Label text="Nuovo nodo (niente per non modificare il nome)" />
+            <TextField fx:id="nuovoNomeTextField" />
+         </children>
+      </HBox>
+      <CheckBox fx:id="isEndNodeCheckBox" mnemonicParsing="false" text="è un nodo finale?" />
+   </children>
+</VBox>

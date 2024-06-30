@@ -35,7 +35,7 @@ public class Model {
         for (File file : listOfFiles) {
             if (file.isFile() && file.getName().toLowerCase().endsWith(".png")) {
                 filenames.add(file.getName());
-                System.out.println(file.getName());
+                //System.out.println(file.getName());
             }
         }
         Collections.sort(filenames);
@@ -45,10 +45,10 @@ public class Model {
 
     public Image getImage() {
         String path = filemanager.getTemporaryWorkDirectory() + File.separator+ currentImage;
-        System.out.println("Loading image: " + path);
-        System.out.println("Images in folder: ");
+        //System.out.println("Loading image: " + path);
+        //System.out.println("Images in folder: ");
         update_last_index();
-        System.out.println();
+        //System.out.println();
         if(currentImage.equals("defaultImage"))
         {
             return new Image(getClass().getResource("defaultImage.png").toString(),true);
@@ -56,7 +56,7 @@ public class Model {
         String newImagePath = filemanager.getTemporaryWorkDirectory()+"/"+currentImage;
         File dir = new File(filemanager.getTemporaryWorkDirectory());
         File path1 = new File(dir,currentImage);
-        System.out.println(path1.getAbsolutePath());
+       // System.out.println(path1.getAbsolutePath());
         try {
             return new Image(path1.toURI().toURL().toExternalForm());
         } catch (MalformedURLException e) {
