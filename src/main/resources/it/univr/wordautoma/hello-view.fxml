@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.HelloController">
@@ -18,15 +19,9 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="btnNew" mnemonicParsing="false" onAction="#onNewClick" text="Nuovo Automa" />
                         <MenuItem mnemonicParsing="false" onAction="#OnSaveClick" text="Salva" />
                         <MenuItem mnemonicParsing="false" onAction="#onButtonClick" text="Open file" />
                         <MenuItem mnemonicParsing="false" text="Close" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -38,34 +33,38 @@
         </MenuBar>
         <HBox fx:id="windowBox" spacing="40.0">
             <children>
-                <Pane fx:id="pane" maxWidth="400.0" prefHeight="200.0" prefWidth="200.0">
+                <Pane fx:id="pane">
                     <children>
-                        <VBox>
+                        <VBox spacing="5.0">
                             <children>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onInserisciNodoClick" text="Aggiungi nodo" />
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onModificaNodoClick" text="Modifica nodo" />
-                        <Button layoutX="10.0" layoutY="36.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEliminaNodoClick" text="Elimina Nodo" />
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSimulateClick" text="Simula" />
-                        <Button layoutX="10.0" layoutY="62.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAggiungiArcoClick" text="Aggiungi Arco" />
-                        <Button layoutX="10.0" layoutY="114.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onModificaArcoClick" text="Modifica Arco" />
-                        <Button layoutX="10.0" layoutY="140.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEliminaArcoClick" text="Elimina Arco" />
-                                <TextField id="simulateText" fx:id="simulateText" maxWidth="1.7976931348623157E308" promptText="Sequenza di caratteri da testare" />
-                                <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Play" textAlignment="CENTER">
-                                    <VBox.margin>
-                                        <Insets />
-                                    </VBox.margin>
-                                </Button>
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onInserisciNodoClick" text="Aggiungi nodo" textAlignment="CENTER" />
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onModificaNodoClick" text="Modifica nodo" textAlignment="CENTER" />
+                        <Button layoutX="10.0" layoutY="36.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEliminaNodoClick" text="Elimina Nodo" textAlignment="CENTER" />
+                        <Button layoutX="10.0" layoutY="62.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAggiungiArcoClick" text="Aggiungi Arco" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin></Button>
+                        <Button layoutX="10.0" layoutY="114.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onModificaArcoClick" text="Modifica Arco" textAlignment="CENTER" />
+                        <Button layoutX="10.0" layoutY="140.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEliminaArcoClick" text="Elimina Arco" textAlignment="CENTER" />
+                                <TextField id="simulateText" fx:id="simulateText" maxWidth="1.7976931348623157E308" promptText="Sequenza di caratteri da testare">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin></TextField>
+                                <Button defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSimulateClick" text="Simula" textAlignment="CENTER" />
                             </children>
                         </VBox>
                     </children>
                 </Pane>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <children>
                       <ImageView fx:id="graph" pickOnBounds="true" preserveRatio="true" />
                   <Text fx:id="message" strokeType="OUTSIDE" strokeWidth="0.0">
                      <VBox.margin>
-                        <Insets top="40.0" />
+                        <Insets bottom="60.0" top="40.0" />
                      </VBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
                   </Text>
                </children>
             </VBox>

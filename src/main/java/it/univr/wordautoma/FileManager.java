@@ -59,36 +59,6 @@ public class FileManager {
         return selectedFile;
     }
 
-    void CreateNewFile()
-    {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Automa");
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-        Stage tempStage = new Stage();
-        File selectedFile = fileChooser.showSaveDialog(tempStage);
-        if(!selectedFile.getName().contains(".txt"))
-            selectedFile = new File(selectedFile.getAbsolutePath() + ".txt");
-        String dirPath = selectedFile.getAbsolutePath().toString().substring(0, selectedFile.getAbsolutePath().toString().length() - (selectedFile.getName().toString().length()));
-        File dir = new File(dirPath);
-        String fileName = selectedFile.getName().toString();
-        System.out.println(dirPath + ' ' + fileName);
-        File newFile = new File(dir, fileName);
-        try {
-            // File.createNewFile() Method Used
-            boolean isFileCreated = newFile.createNewFile();
-            if (isFileCreated) {
-                System.out.println("File created successfully.");
-            }
-            else {
-                System.out.println("File already exists or an error occurred.");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     File SaveToFile(String whatToSave) {
         String boiler = "digraph finite_state_machine {\n" +
                 "fontname=\"Helvetica,Arial,sans-serif\"\n" +
