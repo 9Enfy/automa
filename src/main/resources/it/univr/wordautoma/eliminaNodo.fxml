@@ -12,7 +12,7 @@
          <children>
             <Label text="Nome del nodo da eleminare" />
             <TextField fx:id="nodeNameTextField" />
-            <Button mnemonicParsing="false" onAction="#onConfermaClick" text="Conferma" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onConfermaClick" text="Conferma" />
          </children>
       </HBox>
    </children>

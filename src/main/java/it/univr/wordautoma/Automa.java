@@ -35,7 +35,14 @@ public class Automa {
     public void ReadAutomaFromFile(File fileDaLeggere) throws IOException {
         allNode = new ArrayList<Node>();
         allArch = new ArrayList<Arch>();
-        FileInputStream fs= new FileInputStream(fileDaLeggere);
+        FileInputStream fs;
+        try{
+            fs= new FileInputStream(fileDaLeggere);
+        } catch(Exception e) {
+            System.out.println("File non aperto");
+            return;
+        }
+
         BufferedReader br = new BufferedReader(new InputStreamReader(fs));
         for(int i = 0; i < 9; i++) //la prima riga nodo è la decima
             br.readLine();

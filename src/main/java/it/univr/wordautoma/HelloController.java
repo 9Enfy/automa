@@ -34,7 +34,6 @@ public class HelloController {
 
     private Timeline image_updater;
     private FileManager filemanager;
-
     private Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
     @FXML

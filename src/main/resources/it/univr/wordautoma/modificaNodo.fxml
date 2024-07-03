@@ -13,7 +13,7 @@
          <children>
             <Label text="Nome del nodo da modificare" />
             <TextField fx:id="vecchioNomeTextField" />
-            <Button mnemonicParsing="false" onAction="#onConfermaClick" text="Conferma" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onConfermaClick" text="Conferma" />
          </children>
       </HBox>
       <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="417.0">

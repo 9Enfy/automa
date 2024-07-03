@@ -20,6 +20,6 @@
             <TextField fx:id="arcoArrivoTextField" />
          </children>
       </HBox>
-      <Button mnemonicParsing="false" onAction="#onConfermaClick" text="Conferma" />
+      <Button defaultButton="true" mnemonicParsing="false" onAction="#onConfermaClick" text="Conferma" />
    </children>
 </VBox>
