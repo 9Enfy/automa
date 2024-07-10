@@ -16,6 +16,7 @@ public class HelloApplication extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.getProperties().put("hostServices", this.getHostServices());
         stage.show();
     }
 

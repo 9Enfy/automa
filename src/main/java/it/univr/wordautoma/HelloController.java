@@ -2,6 +2,8 @@ package it.univr.wordautoma;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -35,6 +38,7 @@ public class HelloController {
     private Timeline image_updater;
     private FileManager filemanager;
     private Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private Stage stage;
 
     @FXML
     private void initialize() {
@@ -66,6 +70,7 @@ public class HelloController {
         alert.setContentText(resultText.getResult());
         alert.setHeaderText("Simulazione terminata");
         alert.setTitle("Result");
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.show();
     }
 
@@ -125,6 +130,17 @@ public class HelloController {
     protected void onEliminaArcoClick() throws IOException
     {
         CreaFinestra("eliminaArco.fxml");
+    }
+    @FXML
+    protected void onAboutClick()
+    {
+        HostServices hostServices = (HostServices)this.getStage().getProperties().get("hostServices");
+        hostServices.showDocument("https://github.com/9Enfy/automa");
+    }
+    public Stage getStage() {
+        if(this.stage==null)
+            this.stage = (Stage) this.graph.getScene().getWindow();
+        return stage;
     }
     private void SaveToFile()
     {

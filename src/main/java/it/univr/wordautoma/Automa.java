@@ -6,8 +6,8 @@ import java.io.*;
 import java.util.*;
 
 public class Automa {
-    static ArrayList<Node> allNode;
-    static ArrayList<Arch> allArch;
+    private static ArrayList<Node> allNode;
+    private static ArrayList<Arch> allArch;
     private static final Automa instance = new Automa();
     static Boolean isFirstTime = true;
     static FileManager filemanager;
@@ -243,6 +243,11 @@ public class Automa {
         {
             if(nodoDaEleminare.equals(allNode.get(i).getNome()))
             {
+                if(Objects.equals(allNode.get(i).getId(), "0"))
+                {
+                    alert.setContentText("Non puoi eliminare il nodo iniziale");
+                    alert.show();
+                }
                 nodoDaEleminareNode = allNode.remove(i);
             }
         }
@@ -265,6 +270,12 @@ public class Automa {
     public Boolean AggiungiArco(String nomePartenza, String nomeArrivo, String peso)
     {
         Arch arcoTest = null;
+        if(!peso.matches("[a-zA-Z0-9]+"))
+        {
+            alert.setContentText("Peso dell'arco può contenere solo caratteri alfanumerici");
+            alert.show();
+            return false;
+        }
         for(int i=0;i<allArch.size();i++)
         {
             arcoTest = allArch.get(i);
@@ -298,6 +309,14 @@ public class Automa {
         }
         else
         {
+            //controlla se c'è già un arco con lo stesso peso
+            for (Arch arch : allArch) {
+                if (arch.getSenderNode() == startNode && arch.getWeigth().equals(peso)) {
+                    alert.setContentText("Esiste già un arco con il peso inserito");
+                    alert.show();
+                    return false;
+                }
+            }
             arcoTest = new Arch(startNode,endNode,peso);
             allArch.add(arcoTest);
             return true;
@@ -306,9 +325,21 @@ public class Automa {
     public Boolean ModificaArco(String nomePartenza, String nomeArrivo, String peso)
     {
         Arch arcoTest = null;
+        if(!peso.matches("[a-zA-Z0-9]+"))
+        {
+            alert.setContentText("Peso dell'arco può contenere solo caratteri alfanumerici");
+            alert.show();
+            return false;
+        }
         for(int i=0;i<allArch.size();i++)
         {
             arcoTest = allArch.get(i);
+            if(arcoTest.getSenderNode().getNome().equals(nomePartenza)&&arcoTest.getReceiverNode().getNome().equals(nomeArrivo)) {
+                System.out.println("Esiste già quell'arco");
+                alert.setContentText("Esiste già quell'arco");
+                alert.show();
+                return false;
+            }
             if(arcoTest.getSenderNode().getNome().equals(nomePartenza) && arcoTest.getReceiverNode().getNome().equals(nomeArrivo)) {
                 allArch.get(i).setWeigth(peso);
                 return true;
