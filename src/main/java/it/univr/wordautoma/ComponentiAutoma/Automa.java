@@ -338,6 +338,7 @@ public class Automa {
             if (arch.getSenderNode().getNome().equals(nomePartenza) && arch.weigth.equals(peso)) {
                 alert.setContentText("Esiste già arco con quel peso");
                 alert.show();
+                return false;
             }
         }
         for (Arch arch : allArch) {
