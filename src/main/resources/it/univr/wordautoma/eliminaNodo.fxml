@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.EliminaNodoController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.controllers.OtherController">
    <children>
       <HBox prefHeight="50.0" prefWidth="417.0">
          <children>
             <Label text="Nome del nodo da eleminare" />
-            <TextField fx:id="nodeNameTextField" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#onConfermaClick" text="Conferma" />
+            <TextField fx:id="text1" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onEliminaNodoClick" text="Conferma" />
          </children>
       </HBox>
    </children>

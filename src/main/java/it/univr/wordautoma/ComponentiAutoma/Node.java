@@ -1,4 +1,4 @@
-package it.univr.wordautoma;
+package it.univr.wordautoma.ComponentiAutoma;
 
 public class Node {
     String nome;

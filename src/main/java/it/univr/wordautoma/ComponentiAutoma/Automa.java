@@ -1,5 +1,7 @@
-package it.univr.wordautoma;
+package it.univr.wordautoma.ComponentiAutoma;
 
+import it.univr.wordautoma.FileManager;
+import it.univr.wordautoma.Message;
 import javafx.scene.control.Alert;
 
 import java.io.*;
@@ -324,24 +326,23 @@ public class Automa {
     }
     public Boolean ModificaArco(String nomePartenza, String nomeArrivo, String peso)
     {
-        Arch arcoTest = null;
+
         if(!peso.matches("[a-zA-Z0-9]+"))
         {
             alert.setContentText("Peso dell'arco può contenere solo caratteri alfanumerici");
             alert.show();
             return false;
         }
-        for(int i=0;i<allArch.size();i++)
-        {
-            arcoTest = allArch.get(i);
-            if(arcoTest.getSenderNode().getNome().equals(nomePartenza)&&arcoTest.getReceiverNode().getNome().equals(nomeArrivo)) {
-                System.out.println("Esiste già quell'arco");
-                alert.setContentText("Esiste già quell'arco");
+
+        for (Arch arch : allArch) {
+            if (arch.getSenderNode().getNome().equals(nomePartenza) && arch.weigth.equals(peso)) {
+                alert.setContentText("Esiste già arco con quel peso");
                 alert.show();
-                return false;
             }
-            if(arcoTest.getSenderNode().getNome().equals(nomePartenza) && arcoTest.getReceiverNode().getNome().equals(nomeArrivo)) {
-                allArch.get(i).setWeigth(peso);
+        }
+        for (Arch arch : allArch) {
+            if (arch.getSenderNode().getNome().equals(nomePartenza) && arch.getReceiverNode().getNome().equals(nomeArrivo)) {
+                arch.setWeigth(peso);
                 return true;
             }
         }

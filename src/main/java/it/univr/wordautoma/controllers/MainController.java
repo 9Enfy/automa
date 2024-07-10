@@ -1,34 +1,30 @@
-package it.univr.wordautoma;
+package it.univr.wordautoma.controllers;
 
+import it.univr.wordautoma.ComponentiAutoma.Automa;
+import it.univr.wordautoma.FileManager;
+import it.univr.wordautoma.MainApplication;
+import it.univr.wordautoma.Message;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.LocalTime;
 
 
-public class HelloController {
+public class MainController {
     Automa test;
 
     // IMAGE UPDATER
@@ -102,34 +98,34 @@ public class HelloController {
 
     }
     @FXML
-    protected void onInserisciNodoClick() throws IOException {
-        CreaFinestra("inserisciNodo.fxml");
+    protected void onAggiungiNodoClick() throws IOException {
+        CreaFinestra("inserisciNodo.fxml","Aggiungi Nodo");
 
     }
     @FXML
     protected void onModificaNodoClick() throws IOException {
-        CreaFinestra("modificaNodo.fxml");
+        CreaFinestra("modificaNodo.fxml","Modifica Nodo");
     }
     @FXML
     protected void onEliminaNodoClick() throws IOException
     {
-        CreaFinestra("eliminaNodo.fxml");
+        CreaFinestra("eliminaNodo.fxml","Elimina Nodo");
     }
 
     @FXML
     protected void onAggiungiArcoClick() throws IOException
     {
-        CreaFinestra("aggiungiArco.fxml");
+        CreaFinestra("aggiungiArco.fxml","Aggiungi Arco");
     }
     @FXML
     protected void onModificaArcoClick() throws IOException
     {
-        CreaFinestra("modificaArco.fxml");
+        CreaFinestra("modificaArco.fxml","Modifica Arco");
     }
     @FXML
     protected void onEliminaArcoClick() throws IOException
     {
-        CreaFinestra("eliminaArco.fxml");
+        CreaFinestra("eliminaArco.fxml","Elimina Arco");
     }
     @FXML
     protected void onAboutClick()
@@ -147,11 +143,12 @@ public class HelloController {
         filemanager.SaveToFile(test.toString());
     }
 
-    private void CreaFinestra(String nomeFXML) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(nomeFXML));
+    private void CreaFinestra(String nomeFXML,String titolo) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource(nomeFXML));
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
+        stage.setTitle(titolo);
         stage.setResizable(false);
         stage.show();
     }

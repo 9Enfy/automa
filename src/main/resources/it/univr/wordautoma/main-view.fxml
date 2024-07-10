@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.HelloController">
+<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.controllers.MainController">
     <children>
         <MenuBar>
             <menus>
@@ -35,7 +35,7 @@
                     <children>
                         <VBox spacing="5.0">
                             <children>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onInserisciNodoClick" text="Aggiungi nodo" textAlignment="CENTER" />
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAggiungiNodoClick" text="Aggiungi nodo" textAlignment="CENTER" />
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onModificaNodoClick" text="Modifica nodo" textAlignment="CENTER" />
                         <Button layoutX="10.0" layoutY="36.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEliminaNodoClick" text="Elimina Nodo" textAlignment="CENTER" />
                         <Button layoutX="10.0" layoutY="62.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAggiungiArcoClick" text="Aggiungi Arco" textAlignment="CENTER">

@@ -25,7 +25,7 @@ public class FileManager {
         return instance;
     }
 
-    String getTemporaryWorkDirectory()
+    public String getTemporaryWorkDirectory()
     {
         if(temporaryWorkDirectory.isEmpty())
         {
@@ -44,7 +44,7 @@ public class FileManager {
         return temporaryWorkDirectory;
     }
 
-    File SelectFile()
+    public File SelectFile()
     {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
@@ -59,7 +59,7 @@ public class FileManager {
         return selectedFile;
     }
 
-    File SaveToFile(String whatToSave) {
+    public File SaveToFile(String whatToSave) {
         String boiler = "digraph finite_state_machine {\n" +
                 "fontname=\"Helvetica,Arial,sans-serif\"\n" +
                 "node [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
@@ -92,7 +92,7 @@ public class FileManager {
         }
         return newFile;
     }
-    File SaveToFileAutomatic(String whatToSave)
+    public File SaveToFileAutomatic(String whatToSave)
     {
         String boiler = "digraph finite_state_machine {\n" +
                 "fontname=\"Helvetica,Arial,sans-serif\"\n" +

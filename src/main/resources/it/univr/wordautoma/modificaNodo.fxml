@@ -7,21 +7,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.ModifyNodeController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.controllers.OtherController">
    <children>
       <HBox prefHeight="50.0" prefWidth="417.0">
          <children>
             <Label text="Nome del nodo da modificare" />
-            <TextField fx:id="vecchioNomeTextField" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#onConfermaClick" text="Conferma" />
+            <TextField fx:id="text1" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onModificaNodoClick" text="Conferma" />
          </children>
       </HBox>
       <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="417.0">
          <children>
-            <Label text="Nuovo nodo (niente per non modificare il nome)" />
-            <TextField fx:id="nuovoNomeTextField" />
+            <Label text="Nuovo nome (niente per non modificare il nome)" />
+            <TextField fx:id="text2" />
          </children>
       </HBox>
-      <CheckBox fx:id="isEndNodeCheckBox" mnemonicParsing="false" text="è un nodo finale?" />
+      <CheckBox fx:id="checkBox1" mnemonicParsing="false" text="è un nodo finale?" />
    </children>
 </VBox>

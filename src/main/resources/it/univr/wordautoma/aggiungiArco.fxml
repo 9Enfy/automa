@@ -6,26 +6,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.AggiungiArcoController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.wordautoma.controllers.OtherController">
    <children>
       <HBox prefHeight="50.0" prefWidth="417.0">
          <children>
             <Label text="Nodo di Partenza" />
-            <TextField fx:id="arcoPartenzaTextField" />
+            <TextField fx:id="text1" />
          </children>
       </HBox>
       <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="417.0">
          <children>
             <Label text="Nodo di Arrivo" />
-            <TextField fx:id="arcoArrivoTextField" />
+            <TextField fx:id="text2" />
          </children>
       </HBox>
       <HBox layoutX="10.0" layoutY="36.0" prefHeight="50.0" prefWidth="417.0">
          <children>
             <Label text="Peso arco" />
-            <TextField fx:id="pesoArcoTextField" />
+            <TextField fx:id="text3" />
          </children>
       </HBox>
-      <Button defaultButton="true" mnemonicParsing="false" onAction="#onConfermaClick" text="Conferma" />
+      <Button defaultButton="true" mnemonicParsing="false" onAction="#onAggiungiArcoClick" text="Conferma" />
    </children>
 </VBox>
