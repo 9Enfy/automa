@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.LocalTime;
 
-
+/**
+ * Controller della finestra utente principale.
+ */
 public class MainController {
     Automa test;
 
@@ -45,12 +47,19 @@ public class MainController {
         image_updater.play();
     }
 
+    /**
+     * Metodo che inizializza l'aggiornamento dell'immagine del grafo ogni 100 millisecondi
+     *
+     */
     private void initialize_image_updater() {
         image_updater = new Timeline(new KeyFrame(Duration.millis(100), e -> updateImage()));
         image_updater.setCycleCount(Timeline.INDEFINITE);
     }
 
-    public void updateImage() {
+    /**
+     * Metodo che permette di aggiornare l'immagine. Il programma aggiorna l'immagine ogni 100 millisecondi
+     */
+    private void updateImage() {
         LocalTime time = LocalTime.now();
         test.toImage();
         File dir = new File(filemanager.getTemporaryWorkDirectory());

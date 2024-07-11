@@ -9,6 +9,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Classe che gestisce i file esterni utilizzati dal programma.
+ * FileManager, la prima volta che viene chiamato, crea una cartella temporanea nella directory TMP.
+ * All'interno della cartella temporanea sono presenti il file dot che rappresenta il grafo e l'immagine (test.png) che rappresenta il grafo.
+ * La classe utilizza l'approccio Singleton, quindi esiste un'unica istanza della classe FileManager per tutto il programma.
+ * TODO La cartella temporanea non viene cancellata quando il programma viene chiuso. La cartella viene comunque cancellata quando si spegne il PC.
+ */
 public class FileManager {
 
 
@@ -20,11 +27,21 @@ public class FileManager {
     private FileManager() {
 
     }
+
+    /**
+     * Metodo per ottenere l'istanza del FileManager
+     * @return l'istanza del FileManager
+     */
     public static FileManager getInstance()
     {
         return instance;
     }
 
+    /**
+     * Metodo per ottenere il path  della cartella temporanea. Nel caso non esiste ancora la directory temporanea (priva incovazione del metodo) viene creata
+     *
+     * @return Il path come String della cartella temporanea
+     */
     public String getTemporaryWorkDirectory()
     {
         if(temporaryWorkDirectory.isEmpty())
@@ -44,6 +61,11 @@ public class FileManager {
         return temporaryWorkDirectory;
     }
 
+    /**
+     * Metodo che permette di aprire il file explorer usato di default dal Sistema operativo.
+     * File explorer testati e funzionanti: Dolphin, Thunar, Nautilus
+     * @return Il file che l'utente sceglie
+     */
     public File SelectFile()
     {
         FileChooser fileChooser = new FileChooser();
@@ -59,6 +81,11 @@ public class FileManager {
         return selectedFile;
     }
 
+    /**
+     * Metodo che permette all'utente dell'applicazione di salvare il grafo in una qualsiasi cartella. Il file ha estensione .dot.
+     * @param whatToSave Stringa che verrà memorizzata nel file. Nel programma è l'insieme di nodi e archi scritti in modo che il programma esterno "dot" di graphviz riesca a leggerlo
+     * @return
+     */
     public File SaveToFile(String whatToSave) {
         String boiler = "digraph finite_state_machine {\n" +
                 "fontname=\"Helvetica,Arial,sans-serif\"\n" +
@@ -92,6 +119,12 @@ public class FileManager {
         }
         return newFile;
     }
+
+    /**
+     * Salva il grafo in un file .dot dentro la cartella temporanea.
+     * @param whatToSave Stringa che verrà memorizzata nel file. Nel programma è l'insieme di nodi e archi scritti in modo che il programma esterno "dot" di graphviz riesca a leggerlo
+     * @return
+     */
     public File SaveToFileAutomatic(String whatToSave)
     {
         String boiler = "digraph finite_state_machine {\n" +

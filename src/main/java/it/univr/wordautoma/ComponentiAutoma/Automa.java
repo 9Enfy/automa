@@ -7,6 +7,11 @@ import javafx.scene.control.Alert;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Rappresenta il grafo di nodi e archi usato dall'applicazione.
+ * Il grafo può avere al massimo 10000 nodi.
+ * La classe utilizza l'approccio Singleton, quindi esiste una sola istanza della classe Automa.
+ */
 public class Automa {
     private static ArrayList<Node> allNode;
     private static ArrayList<Arch> allArch;
@@ -18,6 +23,11 @@ public class Automa {
     {
 
     }
+
+    /**
+     * Usare questo metodo per ottenere la istanza del grafo.
+     * @return L'istanza dell'automa.
+     */
     public static Automa getInstance()
     {
         if(isFirstTime)
@@ -34,6 +44,12 @@ public class Automa {
         return instance;
 
     }
+
+    /**
+     * Carica nell'istanza un grafo partendo da un file.
+     * @param fileDaLeggere Il file che contiene le informazione dell'automa da caricare.
+     * @throws IOException
+     */
     public void ReadAutomaFromFile(File fileDaLeggere) throws IOException {
         allNode = new ArrayList<Node>();
         allArch = new ArrayList<Arch>();
@@ -70,15 +86,26 @@ public class Automa {
         }
         System.out.println("FINE");
     }
+
+    /**
+     * Metodo per testare una stringa. Ci possono essere 3 casi:
+     * 1) La stringa permette di arrivare ad uno stato finale e non ci sono altri caratteri nella stringa
+     * 2) La stringa NON permette di arrivare ad uno stato finale e non ci sono altri caratteri nella stringa
+     * 3) Non è possibile proseguire e ci sono altri caratteri nella stringa
+     *
+     * A seconda dei risultati, viene visualizzata una Alert Box contenente la sequenza di operazione svolte.
+     * @param simulateText La stringa che si vuole testare.
+     * @return
+     */
     public Message Simulate(String simulateText) {
         Message resultText = new Message();
         List<String> sequence = new ArrayList<String>();
         Node selectedNode = allNode.get(0);
         sequence.add(allNode.get(0).getNome());
+        List<String> weigthSequence = new ArrayList<String>();
         int length = 0;
         int index = 0;
         int tempIndex = 0;
-        int finalIndex = -1;
         Boolean isValid;
         Node tempNode = null;
         int i;
@@ -100,7 +127,6 @@ public class Automa {
                         tempIndex++;
                     }
                     if (isValid && allArch.get(i).getWeigth().length() > length) {
-                        Boolean trovato = false;
                         tempNode = allArch.get(i).receiverNode;
                         length = allArch.get(i).getWeigth().length();
                         arcoTrovato = i;
@@ -110,13 +136,14 @@ public class Automa {
             if (tempNode == null) {
                 System.out.println("Non è possibile proseguire");
                 resultText.setMessage("Non è possibile proseguire");
-                resultText.setSequence(sequence);
+                resultText.setSequence(sequence,weigthSequence);
                 return resultText;
             } else {
                 System.out.println("Nodo successivo trovato!");
                 index = index + allArch.get(arcoTrovato).getWeigth().length();
                 selectedNode = tempNode;
                 sequence.add(selectedNode.getNome());
+                weigthSequence.add(allArch.get(arcoTrovato).getWeigth());
                 tempNode = null;
                 if (index == simulateText.length()) {
                     if (selectedNode.isEnd) {
@@ -126,7 +153,7 @@ public class Automa {
                         System.out.println("Arrivati alla fine, ma non si è in un nodo fine");
                         resultText.setMessage("Arrivati alla fine, ma non si è in un nodo fine");
                     }
-                    resultText.setSequence(sequence);
+                    resultText.setSequence(sequence,weigthSequence);
                     return resultText;
                 }
             }
@@ -158,6 +185,10 @@ public class Automa {
         return stringaFinale;
     }
 
+    /**
+     * Funzione che permette di convertire il grafo in un immagine.
+     * L'immagine è in formato PNG e si trova nella cartella temporanea creata dalla classe FileManager
+     */
     public void toImage()
     {
         //System.out.println("Test");
@@ -180,6 +211,14 @@ public class Automa {
         }
     }
 
+    /**
+     * Permette di aggiungere un nodo al grafo. All'interno del metodo vengono effettuati tutti i controlli per stabilire se è possibile inserire il nodo o no
+     * Nel caso in cui esiste già un arco con nome nodoDaAggiungere, l'operazione ha esito negativo
+     * L'id del nodo viene generato casualmente
+     * @param nodoDaAggiungere Il nome del nodo da aggiungere
+     * @param isEnd Se il nodo è terminale (True) o no (False)
+     * @return True se l'operazione è andata a buon fine, false altrimenti.
+     */
     public Boolean addNode(String nodoDaAggiungere, Boolean isEnd) {
         if (!nodoDaAggiungere.matches("[a-zA-Z0-9]+")) {
             System.out.println("Contiene caratteri diversi da lettere e numeri");
@@ -205,7 +244,21 @@ public class Automa {
             Node tmp = new Node(nodoDaAggiungere);
             tmp.setIsEnd(false);
             Random random = new Random();
-            tmp.setId(String.valueOf(random.nextInt(0,99999)));
+            Boolean isDuplicate=true;
+            String randomNumber = "";
+            while(isDuplicate)
+            {
+                randomNumber = String.valueOf(random.nextInt(1,99999));
+                isDuplicate=false;
+                for(int i=0;i<allNode.size() && (!isDuplicate);i++)
+                {
+                    if(allNode.get(i).getId().equals(randomNumber))
+                    {
+                        isDuplicate = true;
+                    }
+                }
+            }
+            tmp.setId(randomNumber);
             tmp.setIsEnd(isEnd);
             allNode.add(tmp);
             return true;
@@ -214,6 +267,13 @@ public class Automa {
 
     }
 
+    /**
+     * Permette di modificare un nodo esistente in Automa. Nel caso in cui esiste già un arco con nome nuovoNome, l'operazione ha esito negativo
+     * @param nodoDaModificare Il nome del nodo da modificare
+     * @param nuovoNome Il nuovo nome del nodo da modificare
+     * @param isEnd Se il nodo è terminale o no. Nel caso in cui non si voglia modificare bisogna inserire il valore corrente
+     * @return True se l'operazione ha avuto successo, false altrimenti
+     */
     public Boolean ModifyNode(String nodoDaModificare, String nuovoNome, Boolean isEnd )
     {
         for(int i=0;i<allNode.size();i++)
@@ -238,9 +298,22 @@ public class Automa {
         alert.show();
         return false;
     }
+
+    /**
+     * Elimina il nodo con il nome passato da paramentro.
+     * Se si è trovato il nodo da eliminare, vengono eliminati anche gli archi che hanno o come origine o come destinazione il nodo cancellato
+     * @param nodoDaEleminare Nome del nodo da eliminare
+     * @return True se l'operazione ha avuto successo, false altrimenti
+     */
     public Boolean DeleteNode(String nodoDaEleminare)
     {
+        if(nodoDaEleminare.isEmpty()) {
+            alert.setContentText("Specificare nodo da eliminare");
+            alert.show();
+            return false;
+        }
         Node nodoDaEleminareNode = null;
+        boolean trovato = false;
         for(int i=0;i<allNode.size();i++)
         {
             if(nodoDaEleminare.equals(allNode.get(i).getNome()))
@@ -250,14 +323,17 @@ public class Automa {
                     alert.setContentText("Non puoi eliminare il nodo iniziale");
                     alert.show();
                 }
+                trovato = true;
                 nodoDaEleminareNode = allNode.remove(i);
             }
         }
-        if(nodoDaEleminare.isEmpty()) {
-            alert.setContentText("Specificare nodo da eliminare");
+        if(!trovato)
+        {
+            alert.setContentText("Non è stato trovato il nodo specificato");
             alert.show();
             return false;
         }
+
         //cancella tutti gli archi che hanno il nodo
         for(int i=0;i<allArch.size();i++)
         {
@@ -269,6 +345,17 @@ public class Automa {
         }
         return true;
     }
+
+    /**
+     * Aggiunge un arco al grafo.
+     * Il metodo controlla se esiste già un arco che parte da nomePartenza e arriva a nomeArrivo e, se esistono archi che hanno lo stesso peso dell'arco  da inserire
+     * e il nodo di partenza dell'arco trovato è uguale al nodo di partenza di nomePartenza.
+     * Il peso dell'arco può avere solo valori alfanumerici (A-Z, a-z, 0-9)
+     * @param nomePartenza Nome del nodo di partenza del nuovo arco
+     * @param nomeArrivo Nome del nodo di arrivo del nodo di partenza
+     * @param peso Il peso dell'arco
+     * @return True se l'operazione ha avuto successo, false altrimenti
+     */
     public Boolean AggiungiArco(String nomePartenza, String nomeArrivo, String peso)
     {
         Arch arcoTest = null;
@@ -324,6 +411,17 @@ public class Automa {
             return true;
         }
     }
+
+    /**
+     * Metodo per modificare il peso di un arco esistente.
+     * Il metodo controlla se esistono archi che hanno lo stesso peso dell'arco  da inserire
+     *      * e il nodo di partenza dell'arco trovato è uguale al nodo di partenza di nomePartenza.
+     *      * Il peso dell'arco può avere solo valori alfanumerici (A-Z, a-z, 0-9)
+     * @param nomePartenza
+     * @param nomeArrivo
+     * @param peso
+     * @return True se l'operazione ha avuto successo, false altrimenti
+     */
     public Boolean ModificaArco(String nomePartenza, String nomeArrivo, String peso)
     {
 
@@ -351,6 +449,13 @@ public class Automa {
         alert.show();
         return false;
     }
+
+    /**
+     * Metodo per eliminare l'arco che unisce il nodo con nome nomePartenza con il nodo con nome nomeArrivo
+     * @param nomePartenza
+     * @param nomeArrivo
+     * @return True se l'operazione ha avuto successo, false altrimenti
+     */
     public Boolean EliminaArco(String nomePartenza, String nomeArrivo)
     {
         Arch arcoTest = null;

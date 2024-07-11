@@ -10,13 +10,13 @@ public class Message {
         this.msg = msg;
     }
 
-    public void setSequence(List<String> nodes){
+    public void setSequence(List<String> nodes,List<String> weigth){
         if(nodes == null) return;
 
         sequence = "\n\nSequenza: ";
-        for(String node : nodes)
-            sequence += node + " -> ";
-        sequence += "FIN";
+        for(int i=0;i<nodes.size()-1;i++)
+            sequence += nodes.get(i) + " -> ("+weigth.get(i)+") -> ";
+        sequence+= nodes.get(nodes.size()-1);
     }
 
     public String getResult(){

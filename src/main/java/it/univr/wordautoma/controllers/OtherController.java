@@ -5,6 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller delle finestre secondarie (aggiungi/modifca/elimina nodo/arco).
+ * La classe ha 3 TextField e 1 CheckBox disponibili all'utilizzo. Nel caso una finestra secondaria futura richieda l'utilizzo di 4 o più TextField o di altre componenti, bisogna aggiungerle
+ * anche il questa classe. Come nomi si è deciso di dare nome text1, text2, text3 e checkBox1. Questi nomi devono essere utilizzati nei file FXML per il corretto funzionamento del programma
+ */
 public class OtherController {
     @FXML
     TextField text1;
