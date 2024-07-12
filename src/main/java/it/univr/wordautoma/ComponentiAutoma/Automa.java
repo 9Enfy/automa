@@ -62,6 +62,7 @@ public class Automa {
             getInstance();
             ShowAlert("Non è stato aperto alcun file. Creazione di un nuovo automa");
             System.out.println("File non aperto");
+            toImage();
             return;
         }
 
@@ -103,6 +104,7 @@ public class Automa {
             allArch.add(tempArco);
             lineIWant = br.readLine();
         }
+        toImage();
         System.out.println("FINE");
 
     }
@@ -279,6 +281,7 @@ public class Automa {
             tmp.setId(randomNumber);
             tmp.setIsEnd(isEnd);
             allNode.add(tmp);
+            toImage();
             return true;
         }
 
@@ -319,6 +322,7 @@ public class Automa {
 
                 allNode.get(i).setNome(nuovoNome);
                 allNode.get(i).setIsEnd(isEnd);
+                toImage();
                 return true;
             }
         }
@@ -368,6 +372,7 @@ public class Automa {
                 i--;
             }
         }
+        toImage();
         return true;
     }
 
@@ -429,6 +434,7 @@ public class Automa {
             }
             arcoTest = new Arch(startNode,endNode,peso);
             allArch.add(arcoTest);
+            toImage();
             return true;
         }
     }
@@ -461,6 +467,7 @@ public class Automa {
         for (Arch arch : allArch) {
             if (arch.getSenderNode().getNome().equals(nomePartenza) && arch.getReceiverNode().getNome().equals(nomeArrivo)) {
                 arch.setWeigth(peso);
+                toImage();
                 return true;
             }
         }
@@ -482,6 +489,7 @@ public class Automa {
             arcoTest = allArch.get(i);
             if(arcoTest.getSenderNode().getNome().equals(nomePartenza)&&arcoTest.getReceiverNode().getNome().equals(nomeArrivo)) {
                 allArch.remove(i);
+                toImage();
                 return true;
             }
         }

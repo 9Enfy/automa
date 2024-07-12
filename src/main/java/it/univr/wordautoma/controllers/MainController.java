@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,6 +34,9 @@ public class MainController {
     @FXML
     private ImageView graph;
 
+    @FXML
+    private ScrollPane scrollPane;
+
     private Timeline image_updater;
     private FileManager filemanager;
     private Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -42,9 +46,10 @@ public class MainController {
     private void initialize() {
         filemanager = FileManager.getInstance();
         test = Automa.getInstance();
-        updateImage();
+        scrollPane.setContent(graph);
         initialize_image_updater();
         image_updater.play();
+        test.toImage();
     }
 
     /**
@@ -61,7 +66,6 @@ public class MainController {
      */
     private void updateImage() {
         LocalTime time = LocalTime.now();
-        test.toImage();
         File dir = new File(filemanager.getTemporaryWorkDirectory());
         File path1 = new File(dir,"test.png");
         try {
