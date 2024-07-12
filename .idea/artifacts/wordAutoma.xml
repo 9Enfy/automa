@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="wordAutoma">
+    <output-path>$PROJECT_DIR$/out/artifacts/wordAutoma</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="it.univr.wordautoma.MainApplication" />
+        <option name="description" value="Applicazione per generare e testare automi" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="Automa" />
+        <option name="vendor" value="Myself" />
+        <option name="version" value="1.0" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="wordAutoma.jar">
+        <element id="module-output" name="wordAutoma" />
+      </element>
+    </root>
+  </artifact>
+</component>

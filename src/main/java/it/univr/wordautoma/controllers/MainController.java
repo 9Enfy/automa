@@ -88,8 +88,14 @@ public class MainController {
         File selectedFile = filemanager.SelectFile();
         try {
             test.ReadAutomaFromFile(selectedFile);
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
+            alert.setContentText("Errore nella lettura del file");
+            alert.show();
             throw new RuntimeException(e);
+        }catch (NumberFormatException e)
+        {
+            alert.setContentText("Errore nella lettura del file. Può essere che alcuni nodi e/o archi non siano rappresentati nel grafo. \n Si consiglia di riscrivere completamente il grafo usando l'applicazione");
+            alert.show();
         }
     }
 

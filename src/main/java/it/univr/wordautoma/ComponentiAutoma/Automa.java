@@ -3,6 +3,7 @@ package it.univr.wordautoma.ComponentiAutoma;
 import it.univr.wordautoma.FileManager;
 import it.univr.wordautoma.Message;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.Region;
 
 import java.io.*;
 import java.util.*;
@@ -50,7 +51,7 @@ public class Automa {
      * @param fileDaLeggere Il file che contiene le informazione dell'automa da caricare.
      * @throws IOException
      */
-    public void ReadAutomaFromFile(File fileDaLeggere) throws IOException {
+    public void ReadAutomaFromFile(File fileDaLeggere) throws IOException, NullPointerException, NumberFormatException {
         allNode = new ArrayList<Node>();
         allArch = new ArrayList<Arch>();
         FileInputStream fs;
@@ -65,12 +66,12 @@ public class Automa {
         for(int i = 0; i < 9; i++) //la prima riga nodo è la decima
             br.readLine();
         String lineIWant = br.readLine();
-        String[] test =lineIWant.split(" ");
+        String[] test;
         while(!lineIWant.isEmpty())
         {
             test = lineIWant.split(" ");
             Node tempNode = new Node(test[3]);
-            tempNode.setId(String.valueOf(test[0].charAt(0)));
+            tempNode.setId(String.valueOf(test[0]));
             tempNode.setIsEnd(Objects.equals(test[6], "doublecircle"));
             allNode.add(tempNode);
             lineIWant = br.readLine();
@@ -80,11 +81,27 @@ public class Automa {
         while(!lineIWant.isEmpty())
         {
             test = lineIWant.split(" ");
-            Arch tempArco = new Arch(allNode.get(Integer.parseInt(test[0])),allNode.get(Integer.parseInt(test[2])),test[5]);
+            Node partenza = null;
+            Node arrivo = null;
+            for (Node node : allNode) {
+                if (node.getId().equals(test[0]))
+                    partenza = node;
+                if (node.getId().equals(test[2]))
+                    arrivo = node;
+            }
+            if(partenza==null || arrivo==null)
+            {
+                ShowAlert("Errore nella lettura del file");
+                allNode.clear();
+                allArch.clear();
+                return;
+            }
+            Arch tempArco = new Arch(partenza,arrivo,test[5]);
             allArch.add(tempArco);
             lineIWant = br.readLine();
         }
         System.out.println("FINE");
+
     }
 
     /**
@@ -163,7 +180,7 @@ public class Automa {
     {
         StringBuilder stringaNodi= new StringBuilder();
         Node tempNode;
-        stringaNodi.append("0 [label = q0 ,shape = circle ]\n");
+        //stringaNodi.append("0 [label = q0 ,shape = circle ]\n");
         for(int i=0;i<allNode.size();i++)
         {
             tempNode= allNode.get(i);
@@ -221,9 +238,8 @@ public class Automa {
      */
     public Boolean addNode(String nodoDaAggiungere, Boolean isEnd) {
         if (!nodoDaAggiungere.matches("[a-zA-Z0-9]+")) {
-            System.out.println("Contiene caratteri diversi da lettere e numeri");
-            alert.setContentText("Contiene caratteri diversi da lettere e numeri");
-            alert.show();
+            //System.out.println("Contiene caratteri diversi da lettere e numeri");
+            ShowAlert("Contiene caratteri diversi da lettere e numeri");
             return false;
         }
         Boolean trovato=false;
@@ -234,9 +250,8 @@ public class Automa {
         }
         if(trovato)
         {
-            System.out.println("C'è già un nodo con quel nome");
-            alert.setContentText("C'è già un nodo con quel nome");
-            alert.show();
+           // System.out.println("C'è già un nodo con quel nome");
+            ShowAlert("C'è già un nodo con quel nome");
             return false;
         }
         else
@@ -276,11 +291,21 @@ public class Automa {
      */
     public Boolean ModifyNode(String nodoDaModificare, String nuovoNome, Boolean isEnd )
     {
+        Boolean trovato = false;
+        for(int i=0;i<allNode.size() && !trovato;i++)
+        {
+            if(nodoDaModificare.equals(allNode.get(i).getNome()))
+                trovato=true;
+        }
+        if(!trovato)
+        {
+            ShowAlert("Non esiste il nodo da modificare");
+            return false;
+        }
         for(int i=0;i<allNode.size();i++)
         {
             if(allNode.get(i).getNome().equals(nuovoNome) && !(nodoDaModificare.equals(nuovoNome))){
-                alert.setContentText("C'è già un nodo con quel nome");
-                alert.show();
+                ShowAlert("C'è già un nodo con quel nome");
                 return false;
             }
         }
@@ -294,8 +319,7 @@ public class Automa {
                 return true;
             }
         }
-        alert.setContentText("Nome non valido");
-        alert.show();
+        ShowAlert("Nome non valido");
         return false;
     }
 
@@ -308,8 +332,7 @@ public class Automa {
     public Boolean DeleteNode(String nodoDaEleminare)
     {
         if(nodoDaEleminare.isEmpty()) {
-            alert.setContentText("Specificare nodo da eliminare");
-            alert.show();
+            ShowAlert("Specificare nodo da eliminare");
             return false;
         }
         Node nodoDaEleminareNode = null;
@@ -320,8 +343,8 @@ public class Automa {
             {
                 if(Objects.equals(allNode.get(i).getId(), "0"))
                 {
-                    alert.setContentText("Non puoi eliminare il nodo iniziale");
-                    alert.show();
+                    ShowAlert("Non puoi eliminare il nodo iniziale");
+                    return false;
                 }
                 trovato = true;
                 nodoDaEleminareNode = allNode.remove(i);
@@ -329,8 +352,7 @@ public class Automa {
         }
         if(!trovato)
         {
-            alert.setContentText("Non è stato trovato il nodo specificato");
-            alert.show();
+            ShowAlert("Non è stato trovato il nodo specificato");
             return false;
         }
 
@@ -361,17 +383,15 @@ public class Automa {
         Arch arcoTest = null;
         if(!peso.matches("[a-zA-Z0-9]+"))
         {
-            alert.setContentText("Peso dell'arco può contenere solo caratteri alfanumerici");
-            alert.show();
+            ShowAlert("Peso dell'arco può contenere solo caratteri alfanumerici");
             return false;
         }
         for(int i=0;i<allArch.size();i++)
         {
             arcoTest = allArch.get(i);
             if(arcoTest.getSenderNode().getNome().equals(nomePartenza)&&arcoTest.getReceiverNode().getNome().equals(nomeArrivo)) {
-                System.out.println("Esiste già quell'arco");
-                alert.setContentText("Esiste già quell'arco");
-                alert.show();
+                //System.out.println("Esiste già quell'arco");
+                ShowAlert("Esiste già quell'arco");
                 return false;
             }
         }
@@ -391,9 +411,8 @@ public class Automa {
         }
         if(startNode==null || endNode==null)
         {
-            System.out.println("Uno dei nodi non esiste");
-            alert.setContentText("Uno dei nodi non esiste");
-            alert.show();
+            //System.out.println("Uno dei nodi non esiste");
+            ShowAlert("Uno dei nodi non esiste");
             return false;
         }
         else
@@ -401,8 +420,7 @@ public class Automa {
             //controlla se c'è già un arco con lo stesso peso
             for (Arch arch : allArch) {
                 if (arch.getSenderNode() == startNode && arch.getWeigth().equals(peso)) {
-                    alert.setContentText("Esiste già un arco con il peso inserito");
-                    alert.show();
+                    ShowAlert("Esiste già un arco con il peso inserito");
                     return false;
                 }
             }
@@ -427,15 +445,13 @@ public class Automa {
 
         if(!peso.matches("[a-zA-Z0-9]+"))
         {
-            alert.setContentText("Peso dell'arco può contenere solo caratteri alfanumerici");
-            alert.show();
+            ShowAlert("Peso dell'arco può contenere solo caratteri alfanumerici");
             return false;
         }
 
         for (Arch arch : allArch) {
             if (arch.getSenderNode().getNome().equals(nomePartenza) && arch.weigth.equals(peso)) {
-                alert.setContentText("Esiste già arco con quel peso");
-                alert.show();
+                ShowAlert("Esiste già arco con quel peso");
                 return false;
             }
         }
@@ -445,8 +461,7 @@ public class Automa {
                 return true;
             }
         }
-        alert.setContentText("Non è stato trovato l'arco specificato");
-        alert.show();
+        ShowAlert("Non è stato trovato l'arco specificato");
         return false;
     }
 
@@ -466,9 +481,15 @@ public class Automa {
                 allArch.remove(i);
                 return true;
             }
-        }alert.setContentText("Non è stato trovato l'arco specificato");
-        alert.show();
+        }
+        ShowAlert("Non è stato trovato l'arco specificato");
         return false;
+    }
+    private void ShowAlert(String message)
+    {
+        alert.setContentText(message);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.show();
     }
 
 }

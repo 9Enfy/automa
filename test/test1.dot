@@ -1,0 +1,20 @@
+digraph finite_state_machine {
+fontname="Helvetica,Arial,sans-serif"
+node [fontname="Helvetica,Arial,sans-serif"]
+edge [fontname="Helvetica,Arial,sans-serif"]
+start [label= "", shape=none,height=.0,width=.0]
+rankdir=LR;
+nodesep= 0.5;
+ranksep = 0.5;
+
+0 [label = q0 ,shape = circle ]
+48015 [label = q1 ,shape = circle ]
+20256 [label = q2 ,shape = circle ]
+56414 [label = q3 ,shape = circle ]
+
+start -> 0
+0 -> 48015 [label = a ]
+0 -> 20256 [label = aa ]
+0 -> 56414 [label = aaa ]
+
+}
