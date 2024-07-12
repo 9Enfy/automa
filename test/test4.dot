@@ -1,0 +1,31 @@
+digraph finite_state_machine {
+fontname="Helvetica,Arial,sans-serif"
+node [fontname="Helvetica,Arial,sans-serif"]
+edge [fontname="Helvetica,Arial,sans-serif"]
+start [label= "", shape=none,height=.0,width=.0]
+rankdir=LR;
+nodesep= 0.5;
+ranksep = 0.5;
+
+0 [label = q0 ,shape = doublecircle ]
+11185 [label = q1 ,shape = circle ]
+15867 [label = q2 ,shape = circle ]
+31252 [label = q3 ,shape = circle ]
+33440 [label = q4 ,shape = circle ]
+80598 [label = q5 ,shape = circle ]
+
+start -> 0
+0 -> 11185 [label = 1 ]
+11185 -> 15867 [label = 1 ]
+15867 -> 31252 [label = 1 ]
+31252 -> 33440 [label = 1 ]
+33440 -> 80598 [label = 1 ]
+80598 -> 0 [label = 1 ]
+0 -> 80598 [label = 2 ]
+80598 -> 33440 [label = 2 ]
+33440 -> 31252 [label = 2 ]
+31252 -> 15867 [label = 2 ]
+15867 -> 11185 [label = 2 ]
+11185 -> 0 [label = 2 ]
+
+}

@@ -1,0 +1,31 @@
+digraph finite_state_machine {
+fontname="Helvetica,Arial,sans-serif"
+node [fontname="Helvetica,Arial,sans-serif"]
+edge [fontname="Helvetica,Arial,sans-serif"]
+start [label= "", shape=none,height=.0,width=.0]
+rankdir=LR;
+nodesep= 0.5;
+ranksep = 0.5;
+
+0 [label = Inizio ,shape = circle ]
+1034 [label = ciao ,shape = circle ]
+68660 [label = mondo ,shape = doublecircle ]
+82558 [label = come ,shape = circle ]
+30201 [label = stai ,shape = circle ]
+30873 [label = Sono ,shape = circle ]
+26920 [label = JavaFX ,shape = doublecircle ]
+
+start -> 0
+0 -> 1034 [label = testParolaLunga ]
+1034 -> 68660 [label = qwerty ]
+1034 -> 30873 [label = hello ]
+68660 -> 26920 [label = di ]
+0 -> 82558 [label = spero ]
+82558 -> 30201 [label = bene ]
+30201 -> 68660 [label = ok ]
+30873 -> 26920 [label = abc ]
+26920 -> 0 [label = restart ]
+26920 -> 26920 [label = r ]
+30201 -> 82558 [label = male ]
+
+}

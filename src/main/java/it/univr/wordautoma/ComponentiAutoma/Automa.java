@@ -58,6 +58,9 @@ public class Automa {
         try{
             fs= new FileInputStream(fileDaLeggere);
         } catch(Exception e) {
+            isFirstTime = true;
+            getInstance();
+            ShowAlert("Non è stato aperto alcun file. Creazione di un nuovo automa");
             System.out.println("File non aperto");
             return;
         }
