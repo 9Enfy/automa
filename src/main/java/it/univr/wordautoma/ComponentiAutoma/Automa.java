@@ -19,7 +19,7 @@ public class Automa {
     private static final Automa instance = new Automa();
     static Boolean isFirstTime = true;
     static FileManager filemanager;
-    private Alert alert = new Alert(Alert.AlertType.ERROR);
+    private static Alert alert = new Alert(Alert.AlertType.ERROR);
     private Automa()
     {
 
@@ -218,6 +218,26 @@ public class Automa {
         fileDaConvertire.setReadable(true);
         File doveSalvare = new File(filemanager.getTemporaryWorkDirectory()+"/test.png");
         doveSalvare.setWritable(true,false);
+        try {
+            //String command = "dot -Tpng "+fileDaConvertire.getAbsolutePath()+" -o "+doveSalvare.getAbsolutePath();
+            List<String> testListe = new ArrayList<String>();
+            testListe.add("dot");
+            testListe.add("-Tpng");
+            //testListe.add("-Gratio=fill");
+            testListe.add(fileDaConvertire.getAbsolutePath());
+            testListe.add("-o");
+            testListe.add(doveSalvare.getAbsolutePath());
+            Process process = new ProcessBuilder(testListe).inheritIO().start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void toImageManual(File doveSalvare)
+    {
+        //System.out.println("Test");
+        File fileDaConvertire = filemanager.SaveToFileAutomatic(this.toString());
+        fileDaConvertire.setReadable(true);
         try {
             //String command = "dot -Tpng "+fileDaConvertire.getAbsolutePath()+" -o "+doveSalvare.getAbsolutePath();
             List<String> testListe = new ArrayList<String>();
@@ -496,10 +516,17 @@ public class Automa {
         ShowAlert("Non è stato trovato l'arco specificato");
         return false;
     }
-    private void ShowAlert(String message)
+    public static void ShowAlert(String message)
     {
         alert.setContentText(message);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.show();
+    }
+    public static void ShowAlert(String message, Alert.AlertType type)
+    {
+        alert.setContentText(message);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.setAlertType(type);
         alert.show();
     }
 

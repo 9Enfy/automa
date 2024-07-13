@@ -1,5 +1,6 @@
 package it.univr.wordautoma;
 
+import it.univr.wordautoma.ComponentiAutoma.Automa;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -8,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 /**
  * Classe che gestisce i file esterni utilizzati dal programma.
@@ -101,7 +103,7 @@ public class FileManager {
                 new FileChooser.ExtensionFilter("Dot Files", "*.dot"));
         Stage tempStage = new Stage();
         File selectedFile = fileChooser.showSaveDialog(tempStage);
-        if (!selectedFile.getName().contains(".txt"))
+        if (!selectedFile.getName().contains(".dot"))
             selectedFile = new File(selectedFile.getAbsolutePath() + ".dot");
         String dirPath = selectedFile.getAbsolutePath().toString().substring(0, selectedFile.getAbsolutePath().toString().length() - (selectedFile.getName().toString().length()));
         File dir = new File(dirPath);
@@ -145,6 +147,29 @@ public class FileManager {
             throw new RuntimeException(e);
         }
         return newFile;
+    }
+    public Boolean ExportImage()
+    {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Exporta l'immagine");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Png Files", "*.png"));
+        Stage tempStage = new Stage();
+        File selectedFile = fileChooser.showSaveDialog(tempStage);
+        if (!selectedFile.getName().contains(".png"))
+            selectedFile = new File(selectedFile.getAbsolutePath() + ".png");
+        File fileDaCopiare = new File(getTemporaryWorkDirectory(),"test.png");
+        try
+        {
+            Files.copy(fileDaCopiare.toPath(), selectedFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (IOException e)
+        {
+            return false;
+        }
+        return true;
+
+
     }
 
 

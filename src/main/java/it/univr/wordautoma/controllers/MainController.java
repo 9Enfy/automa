@@ -117,6 +117,14 @@ public class MainController {
 
     }
     @FXML
+    protected void OnExportClick()
+    {
+        if(filemanager.ExportImage())
+            Automa.ShowAlert("Export immagine finito", Alert.AlertType.INFORMATION);
+        else
+            Automa.ShowAlert("Export immagine fallito", Alert.AlertType.ERROR);
+    }
+    @FXML
     protected void onAggiungiNodoClick() throws IOException {
         CreaFinestra("inserisciNodo.fxml","Aggiungi Nodo");
 
