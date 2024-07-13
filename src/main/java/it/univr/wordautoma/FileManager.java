@@ -88,7 +88,7 @@ public class FileManager {
      * @param whatToSave Stringa che verrà memorizzata nel file. Nel programma è l'insieme di nodi e archi scritti in modo che il programma esterno "dot" di graphviz riesca a leggerlo
      * @return
      */
-    public File SaveToFile(String whatToSave) {
+    public Boolean SaveToFile(String whatToSave) {
         String boiler = "digraph finite_state_machine {\n" +
                 "fontname=\"Helvetica,Arial,sans-serif\"\n" +
                 "node [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
@@ -116,10 +116,14 @@ public class FileManager {
             fW.write(boiler + "\n" + whatToSave);
             fW.close();
         } catch (IOException e) {
-            System.out.println("Scrittura nel file fallita");
-            throw new RuntimeException(e);
+            Automa.ShowAlert("Scrittura nel file fallita");
+            return false;
+        } catch (NullPointerException e)
+        {
+            Automa.ShowAlert("Scrittura nel file fallita");
+            return false;
         }
-        return newFile;
+        return true;
     }
 
     /**

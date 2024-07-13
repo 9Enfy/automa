@@ -19,6 +19,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
+                  <MenuItem mnemonicParsing="false" onAction="#OnNewClick" text="Nuovo Automa" />
                         <MenuItem mnemonicParsing="false" onAction="#OnSaveClick" text="Salva" />
                         <MenuItem mnemonicParsing="false" onAction="#onButtonClick" text="Apri file" />
                   <MenuItem mnemonicParsing="false" onAction="#OnExportClick" text="Export Immagine" />

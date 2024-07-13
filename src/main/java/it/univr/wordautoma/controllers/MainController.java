@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -23,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.LocalTime;
+import java.util.Optional;
 
 /**
  * Controller della finestra utente principale.
@@ -86,6 +88,30 @@ public class MainController {
     @FXML
     private TextField simulateText;
 
+
+    @FXML
+    protected void OnNewClick()
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Conferma Nuovo Automa");
+        alert.setContentText("Sicuro di voler creare un nuovo automata?");
+        Optional<ButtonType> bottoneCliccato = alert.showAndWait();
+        if(bottoneCliccato.isPresent() && bottoneCliccato.get()!= ButtonType.OK)
+            Automa.ShowAlert("Creazione nuovo automa cancellata", Alert.AlertType.INFORMATION);
+        else
+        {
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Conferma Nuovo Automa");
+            alert.setContentText("Vuoi salvare l'automata attuale? Premi ok per decidere dove salvare o cancella se vuoi eliminare l'automata attuale");
+            bottoneCliccato = alert.showAndWait();
+            if(bottoneCliccato.isPresent() && bottoneCliccato.get() == ButtonType.OK)
+            {
+                if(SaveToFile())
+                    test.ResetAutoma();
+            }
+            test.ResetAutoma();
+        }
+    }
     @FXML
     protected void onButtonClick()
     {
@@ -165,9 +191,9 @@ public class MainController {
             this.stage = (Stage) this.graph.getScene().getWindow();
         return stage;
     }
-    private void SaveToFile()
+    private Boolean SaveToFile()
     {
-        filemanager.SaveToFile(test.toString());
+        return filemanager.SaveToFile(test.toString());
     }
 
     private void CreaFinestra(String nomeFXML,String titolo) throws IOException {

@@ -58,11 +58,9 @@ public class Automa {
         try{
             fs= new FileInputStream(fileDaLeggere);
         } catch(Exception e) {
-            isFirstTime = true;
-            getInstance();
+            ResetAutoma();
             ShowAlert("Non è stato aperto alcun file. Creazione di un nuovo automa");
             System.out.println("File non aperto");
-            toImage();
             return;
         }
 
@@ -528,6 +526,12 @@ public class Automa {
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setAlertType(type);
         alert.show();
+    }
+    public void ResetAutoma()
+    {
+        isFirstTime = true;
+        getInstance();
+        toImage();
     }
 
 }
