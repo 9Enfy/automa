@@ -96,9 +96,9 @@ public class MainController {
         alert.setTitle("Conferma Nuovo Automa");
         alert.setContentText("Sicuro di voler creare un nuovo automata?");
         Optional<ButtonType> bottoneCliccato = alert.showAndWait();
-        if(bottoneCliccato.isPresent() && bottoneCliccato.get()!= ButtonType.OK)
+        if(bottoneCliccato.isPresent() && bottoneCliccato.get()== ButtonType.CANCEL)
             Automa.ShowAlert("Creazione nuovo automa cancellata", Alert.AlertType.INFORMATION);
-        else
+        if(bottoneCliccato.isPresent() && bottoneCliccato.get()==ButtonType.OK)
         {
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Conferma Nuovo Automa");
@@ -108,8 +108,13 @@ public class MainController {
             {
                 if(SaveToFile())
                     test.ResetAutoma();
+                return;
             }
-            test.ResetAutoma();
+            if(bottoneCliccato.isPresent() && bottoneCliccato.get()==ButtonType.CANCEL)
+            {
+                test.ResetAutoma();
+            }
+
         }
     }
     @FXML
