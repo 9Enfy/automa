@@ -1,6 +1,6 @@
-#Progetto Automata
+# Progetto Automata
 
-## Feature
+## Feature
 
 - Creazione di un Automata
   
@@ -15,15 +15,15 @@
 - Salvare l'immagine che rappresenta l'automata
   
 
-## Dipendenze
+## Dipendenze
 
 L'applicazione richiede che il programma [Graphviz](https://graphviz.org) si trova nel PATH del sistema operativo. Per installare Graphviz, seguire le istruzioni riportate su questo link: [Download | Graphviz](https://graphviz.org/download/).
 
-## Compatibilità
+## Compatibilità
 
 L'applicazione è stata testata sia con sistemi operativi basati su Ubuntu sia su sistemi operativi basati su Arch. Compatibilità con Windows è ancora da implementare. Non si prevede la compatibilità con MacOS.
 
-## Breve tutorial
+## Breve tutorial
 
 L'applicazione è composta da una finestra principale, contenente sei pulsanti per modifcare l'automata, una casella di testo con sotto un pulsante simula e, nella parte superiore dell'applicazione, un menù a tendina.
 
